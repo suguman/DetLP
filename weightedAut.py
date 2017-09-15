@@ -131,7 +131,49 @@ class wBA(BA):
 
         return wBA(stateList, alphaList, transList, startList)
             
+    @classmethod
+    def sameAlphaProdMinus(cls, aut1, aut2):
+        newState = []
+        newAlpha = []
+        newTrans = []
+        for trans1 in aut1.Trans():
+            for trans2 in aut2.Trans():
+                src1, dest1, alpha1, [wt1] = trans1
+                src2, dest2, alpha2, [wt2] = trans2
+                #print alpha1, alpha2
+                if alpha1 == alpha2:
+                    src = src1 + src2
+                    dest= dest1 + dest2
+                    trans = src, dest, alpha1, [wt1-wt2] 
+                    if alpha1 not in newAlpha:
+                        newAlpha.append(alpha1)
+                        #print alpha1, alpha2, alpha
+                    if src not in newState:
+                        newState.append(src)
+                    if dest not in newState:
+                        newState.append(dest)
+                    if trans not in newTrans:
+                        newTrans.append(trans)
+        newStart = []
+        for s1 in aut1.Start():
+            for s2 in aut2.Start():
+                newStart.append(s1+s2)
+        startInState = False
+        for st in newStart:
+            if st in newState:
+                startInState = True
 
+        #print startInState, "HERE"
+        
+        if startInState == True:
+            return wBA(newState, newAlpha, newTrans, newStart)
+        else:
+            #aut = BA([], newAlpha, [], [], [])
+            #aut.baWrite("AUT")
+            
+            return wBA([], [], [], [])
+
+        
     # Reassigns states in an automata to [i] where i is an integer
     def reassign(self):
         states = self.States()       

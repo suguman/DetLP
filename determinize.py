@@ -1,4 +1,3 @@
-from automata import BA
 from weightedAut import wBA
 
 def determinize(wAutIn, num):
@@ -55,7 +54,7 @@ def determinize(wAutIn, num):
                         createState[h] = ch
                 c = min(createState)
                 #print "Here2"
-                print createState, c, alpha
+                #print createState, c, alpha
                 destinationState = []
                 for ch in createState:
                     if ch == float('inf'):
@@ -66,7 +65,7 @@ def determinize(wAutIn, num):
                             xh = limit
                     destinationState.append(xh)
                 newTrans = (state, destinationState, [alpha], [c])
-                print newTrans
+                #print newTrans
                 # Adding new transition to list of transitions
                 if newTrans not in newTransList:
                     newTransList.append(newTrans)
@@ -83,9 +82,10 @@ def determinize(wAutIn, num):
         greyStateList = newGreyStateList
 
     detWAut = wBA(newStateList, newAlpha,  newTransList, newStartList)
-    detWAut.myPrint()
-    detWAut.reassign()
-    return detWAut
+    #detWAut.myPrint()
+    reassigned = detWAut.reassign()
+    #reassigned.printTrans()
+    return reassigned
 
 
 
