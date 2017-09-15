@@ -1,6 +1,6 @@
 from automata import BA
 from weightedAut import wBA
-from fileToBA import *
+#from fileToBA import *
 from determinize import determinize
 
 def detLP(filename1, filename2, num):
@@ -11,7 +11,11 @@ def detLP(filename1, filename2, num):
 
     #determinization of weighted automata
     detAut1 = determinize(wAut1, num)
-    detAut2 = determinize(wAut2, num)
-    
+    #detAut2 = determinize(wAut2, num)
+
+    #take product of detAut1, detAut2 with difference of weight
+
+    #solve linear inequality
 
     
+detLP("Input1", "Input2", 2)

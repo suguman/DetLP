@@ -9,8 +9,10 @@ class wBA(BA):
     # Accessor function for weights
     def Weights(self):
         weights = []
+        #print self.Trans()
         for trans in self.Trans():
             wt = trans[3][0]
+            #print wt
             if wt not in weights:
                 weights.append(wt)
         return weights
@@ -24,7 +26,24 @@ class wBA(BA):
                 maxWt = wt
         return maxWt
 
-    
+    # Accessor function for minimum Weight
+    def minWeight(self):
+        wtList = self.Weights()
+        if wtList == []:
+            return 0
+        else:
+            return min(wtList) 
+
+
+    # Access weight of each transition
+    def wtFunction(self):
+        wtF = {(s,d,a):[] for ([s],[d],[a],[wt]) in self.Trans()}
+        for ([s],[d],[a],[wt]) in self.Trans():
+            wtKey = (s,d,a)
+            if wt not in wtF[wtKey]:
+                wtF[wtKey].append(wt)
+        return  wtF
+        
     def printWeight(self):
         print("Weights are : " + str(self.Weights()))
 
@@ -112,7 +131,21 @@ class wBA(BA):
 
         return wBA(stateList, alphaList, transList, startList)
             
-        
+
+    # Reassigns states in an automata to [i] where i is an integer
+    def reassign(self):
+        states = self.States()       
+        statesMap = {}
+        i = 0
+        for state in states:
+            statesMap[str(state)] = [i]
+            i += 1       
+        newStates = [statesMap[str(state)] for state in self.States()]
+        newTrans = [(statesMap[str(src)], statesMap[str(destination)], alphabet, wt) for (src, destination, alphabet, wt) in self.Trans()]
+        newStart = [statesMap[str(state)] for state in self.Start()]
+        reassignedBA = wBA(newStates, self.Alpha(), newTrans, newStart)
+
+        return reassignedBA
         
     
 
