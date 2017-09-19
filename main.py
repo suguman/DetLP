@@ -2,7 +2,7 @@ from automata import BA
 from weightedAut import wBA
 #from fileToBA import *
 from determinize import determinize
-from DSGame import makeDSGame
+from DSGame import findMinWeight
 
 def detLP(filename1, filename2, num):
 
@@ -11,6 +11,7 @@ def detLP(filename1, filename2, num):
     wAut2 = wBA.readInput(filename2)
 
     #complete automata
+    #TODO
     
     #determinization of weighted automata
     detAut1 = determinize(wAut1, num)
@@ -25,6 +26,13 @@ def detLP(filename1, filename2, num):
     prodAut.printTrans()
 
     #solve linear inequality
-    minWeight = makeDSGame(prodAut, num, "file")
+    minWeight = findMinWeight(prodAut, num, "file")
+    print minWeight
+
+    if minWeight == "ERROR":
+        return "ERROR"
+
+    return minWeight>0
+
     
 detLP("Input1", "Input2", 2)
