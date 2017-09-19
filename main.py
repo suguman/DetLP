@@ -2,6 +2,7 @@ from automata import BA
 from weightedAut import wBA
 #from fileToBA import *
 from determinize import determinize
+from DSGame import makeDSGame
 
 def detLP(filename1, filename2, num):
 
@@ -9,15 +10,21 @@ def detLP(filename1, filename2, num):
     wAut1 = wBA.readInput(filename1)
     wAut2 = wBA.readInput(filename2)
 
+    #complete automata
+    
     #determinization of weighted automata
     detAut1 = determinize(wAut1, num)
     detAut2 = determinize(wAut2, num)
 
     #take product of detAut1, detAut2 with difference of weight
-    prodAut = (wBA.sameAlphaProdMinus(detAut1, detAut2)).reassign()
-    prodAut.myPrint()
-    
+    prodAutTemp = (wBA.sameAlphaProdMinus(detAut1, detAut2)).reassign()
+    prodAutTemp.printTrans()
+
+    #To remove infinite or -infinite weighted edges. 
+    prodAut = prodAutTemp.removeInf()
+    prodAut.printTrans()
+
     #solve linear inequality
-    
+    minWeight = makeDSGame(prodAut, num, "file")
     
 detLP("Input1", "Input2", 2)

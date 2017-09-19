@@ -163,6 +163,7 @@ class wBA(BA):
             if st in newState:
                 startInState = True
 
+        #print newTrans
         #print startInState, "HERE"
         
         if startInState == True:
@@ -188,8 +189,18 @@ class wBA(BA):
         reassignedBA = wBA(newStates, self.Alpha(), newTrans, newStart)
 
         return reassignedBA
-        
-    
+
+    # Remove infinite or -infinite weighted transitions
+    def removeInf(self):
+        inf = float('inf')
+        negInf = -float('inf')
+        transList = self.Trans()
+        newTransList = []
+        for trans in transList:
+            src, destination, alpha, [wt] = trans
+            if ((wt != inf) and (wt!= negInf)):
+                newTransList.append(trans)
+        return wBA(self.States(), self.Alpha(), newTransList, self.Start())
 
 #a = ["a"]
 #b = ["b"]
