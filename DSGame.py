@@ -30,13 +30,20 @@ def makeDSGame(wAut, num, fileName):
     for trans in transList:
         counter += 1
         [src], [destination], alpha, [wt] = trans
+
+        #glpk cannot operate when the same variable appears twice or more in the inequality.
+        #can occur on self loops
+        #inequality is set up differently when the transition is a self-loop
         srcVar = var + str(src)
         destinationVar = var + str(destination)
-        #line = num+sep+srcVar+sep+minus+desrinationVar+sep+leq+sep+
-        constraintAr = [str(num), srcVar, minus, destinationVar, leq, str(num*wt)]
+        if src == destination:
+            constraintAr = [str(num-1), srcVar, leq, str(num*wt)]
+        else:
+            #line = num+sep+srcVar+sep+minus+desrinationVar+sep+leq+sep+
+            constraintAr = [str(num), srcVar, minus, destinationVar, leq, str(num*wt)]
         line = sep.join(constraintAr) + newline
         bufferLine += line
-        if counter%2 == 0:
+        if counter%100 == 0:
             f.write(bufferLine)
             counter = 0
             bufferLine = ""
@@ -54,7 +61,7 @@ def runGLPK(filename):
     os.system(cmd)
     minWeight = getValFromFile("output1.txt")
     cmd = "rm "+GLPKPath + filename + ".lp " + "output1.txt"
-    os.system(cmd)
+    #os.system(cmd)
     return minWeight
 
 
@@ -81,6 +88,7 @@ def getValFromFile(filename):
         #print val
         return val
     else:
+        #return -1
         return "ERROR"
     
 def findMinWeight(wAut, num, filename):

@@ -35,4 +35,4 @@ def detLP(filename1, filename2, num):
     return minWeight>0
 
     
-detLP("Input1", "Input2", 2)
+detLP("Input1", "Input3", 3)
