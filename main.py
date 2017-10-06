@@ -27,7 +27,7 @@ def detLP(wAut1, wAut2, num):
 
     #To remove infinite or -infinite weighted edges. 
     prodAut = prodAutTemp.removeInf()
-    prodAut.printTrans()
+    #prodAut.printTrans()
 
     #solve linear inequality
     minWeight = findMinWeight(prodAut, num, "file")
@@ -60,4 +60,4 @@ def detLPWrapper(filename1, filename2, num, wtFun):
     #wAutNew1.myPrint()
     print detLP(wAutNew2, wAutNew1, num)
     
-detLPWrapper("Input3", "Input3", 3, "sup")
+detLPWrapper("Input3", "Input1", 3, "sup")

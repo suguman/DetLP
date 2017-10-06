@@ -67,8 +67,8 @@ class wBA(BA):
     def linearTransform(self, mult, const):
         oldTrans = self.Trans()
         newTrans = [(src, dest, alpha, [(mult*wt)+const]) for (src, dest, alpha, [wt]) in oldTrans]
-        #print oldTrans
-        #print newTrans
+        print oldTrans
+        print newTrans
         return wBA(self.States(), self.Alpha(), newTrans, self.Start())
         
 
