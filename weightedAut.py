@@ -60,6 +60,20 @@ class wBA(BA):
         self.printTrans() 
         self.printWeight()
 
+
+    # Linearly transforms weight of transitons
+    # Input: wAut with weight w on transitions
+    # Output: wAut with weight mult*w + const on transitions
+    def linearTransform(self, mult, const):
+        oldTrans = self.Trans()
+        newTrans = [(src, dest, alpha, [(mult*wt)+const]) for (src, dest, alpha, [wt]) in oldTrans]
+        #print oldTrans
+        #print newTrans
+        return wBA(self.States(), self.Alpha(), newTrans, self.Start())
+        
+
+
+
     #Adds weight to each transition alphabet
     #Input: Weighted automata
     #Output: Buchi automata where alphabet has been augmented with weight of transition
